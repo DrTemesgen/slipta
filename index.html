@@ -414,11 +414,31 @@ function bind(){
     const q=o.dataset.q, v=o.dataset.v;
     answers[q]=(answers[q]===v)?undefined:v;
     if(!answers[q])delete answers[q];
-    save(); render();
+    save();
+    refreshQuestion(q);
+    update();
   }));
   document.querySelectorAll('.cmt').forEach(c=>c.addEventListener('input',e=>{
     comments[c.dataset.q]=c.value; save();
   }));
+}
+
+function refreshQuestion(qn){
+  const v=answers[qn]||'';
+  const opts=document.querySelectorAll('.opt[data-q="'+qn+'"]');
+  if(!opts.length)return;
+  opts.forEach(o=>o.classList.toggle('on',o.dataset.v===v));
+  const qMain=opts[0].closest('.q-main');
+  let gapEl=qMain.querySelector('.gap');
+  const isGap=(v==='N'||v==='P');
+  if(isGap&&!gapEl){
+    gapEl=document.createElement('div');
+    gapEl.className='gap';
+    gapEl.innerHTML='<span class="gap-flag">⚑ Gap — action needed</span>';
+    qMain.querySelector('.opts').insertAdjacentElement('afterend',gapEl);
+  }else if(!isGap&&gapEl){
+    gapEl.remove();
+  }
 }
 
 function update(){
