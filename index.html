@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b3d2e">
+<title>SLIPTA Self-Assessment · V3:2023</title>
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22SLIPTA%20Self-Assessment%22%2C%22short_name%22%3A%22SLIPTA%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b3d2e%22%2C%22theme_color%22%3A%22%230b3d2e%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2522http%253A%252F%252Fwww.w3.org%252F2000%252Fsvg%2522%2520viewBox%253D%25220%25200%2520192%2520192%2522%253E%253Crect%2520width%253D%2522192%2522%2520height%253D%2522192%2522%2520rx%253D%252236%2522%2520fill%253D%2522%25230b3d2e%2522%252F%253E%253Ctext%2520x%253D%252296%2522%2520y%253D%2522120%2522%2520font-size%253D%252292%2522%2520text-anchor%253D%2522middle%2522%2520fill%253D%2522%2523e8c547%2522%2520font-family%253D%2522Georgia%252Cserif%2522%2520font-weight%253D%2522bold%2522%253ES%253C%252Ftext%253E%253C%252Fsvg%253E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
+<style>
+:root{
+  --ink:#0b1f17; --green:#0b3d2e; --green2:#13573f; --gold:#c79a26; --gold-soft:#e8c547;
+  --paper:#f6f4ec; --card:#fffdf7; --line:#d9d3c2; --muted:#6b6657;
+  --y:#1f7a4d; --p:#caa015; --n:#c0392b; --na:#7a7468;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--paper);color:var(--ink);font-family:"Iowan Old Style",Palatino,"Palatino Linotype",Georgia,serif;-webkit-font-smoothing:antialiased}
+body{padding-bottom:120px}
+.wrap{max-width:880px;margin:0 auto;padding:0 18px}
+header{background:linear-gradient(160deg,var(--green),var(--green2));color:#f4efe1;padding:26px 0 22px;position:relative;overflow:hidden}
+header::after{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.05) 1px,transparent 0);background-size:14px 14px;pointer-events:none}
+header .wrap{position:relative}
+.eyebrow{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft);opacity:.9}
+h1{font-size:27px;line-height:1.15;margin:6px 0 4px;font-weight:600}
+.sub{font-size:14px;opacity:.85;font-style:italic}
+.rule{height:3px;width:54px;background:var(--gold);margin:14px 0 0;border-radius:2px}
+
+.scorebar{position:sticky;top:0;z-index:40;background:rgba(11,61,46,.97);backdrop-filter:blur(8px);color:#f4efe1;border-bottom:2px solid var(--gold)}
+.scorebar .wrap{display:flex;align-items:center;gap:16px;padding:10px 18px}
+.stars{font-size:22px;letter-spacing:2px;color:var(--gold-soft);white-space:nowrap}
+.sc-pct{font-size:24px;font-weight:700;font-family:ui-monospace,monospace}
+.sc-meta{font-size:12px;opacity:.8;margin-left:auto;text-align:right;line-height:1.3}
+.sc-meta b{color:var(--gold-soft)}
+
+.intro{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:20px 0;box-shadow:0 2px 0 rgba(0,0,0,.03)}
+.intro p{font-size:14px;color:var(--muted);line-height:1.55;margin-bottom:8px}
+.intro p:last-child{margin-bottom:0}
+.intro .src{font-family:ui-monospace,monospace;font-size:11px;color:var(--green2)}
+
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+.btn{font-family:inherit;font-size:13px;padding:9px 15px;border-radius:9px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;transition:.15s;font-weight:500}
+.btn:hover{border-color:var(--green2);color:var(--green)}
+.btn.primary{background:var(--green);color:#f4efe1;border-color:var(--green)}
+.btn.primary:hover{background:var(--green2);color:#fff}
+.btn.warn:hover{border-color:var(--n);color:var(--n)}
+
+.section{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+.sec-head{display:flex;align-items:center;gap:14px;padding:15px 18px;cursor:pointer;user-select:none;background:linear-gradient(180deg,#fffef9,#faf7ee)}
+.sec-num{font-family:ui-monospace,monospace;font-size:13px;font-weight:700;color:#fff;background:var(--green);width:30px;height:30px;border-radius:7px;display:grid;place-items:center;flex:none}
+.sec-title{font-size:16px;font-weight:600;flex:1;line-height:1.2}
+.sec-score{font-family:ui-monospace,monospace;font-size:13px;color:var(--muted);text-align:right;flex:none}
+.sec-score b{color:var(--green);font-size:15px}
+.sec-bar{height:5px;background:#ece7d8;border-radius:3px;overflow:hidden;width:74px;margin-top:4px}
+.sec-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--y));width:0;transition:width .35s}
+.chev{transition:.2s;color:var(--muted);font-size:13px;flex:none}
+.section.open .chev{transform:rotate(90deg)}
+.sec-body{display:none;border-top:1px solid var(--line)}
+.section.open .sec-body{display:block}
+.sec-note{font-size:12px;font-style:italic;color:var(--p);background:#fdfae8;padding:8px 18px;border-bottom:1px solid var(--line)}
+
+.q{padding:13px 18px;border-bottom:1px solid #efeadd;display:flex;gap:13px;align-items:flex-start}
+.q:last-child{border-bottom:none}
+.q-num{font-family:ui-monospace,monospace;font-size:12px;color:var(--green2);font-weight:700;flex:none;min-width:34px;padding-top:3px}
+.q-main{flex:1;min-width:0}
+.q-text{font-size:14px;line-height:1.45;margin-bottom:9px}
+.q-pts{font-size:11px;color:var(--muted);font-family:ui-monospace,monospace}
+.opts{display:flex;gap:6px;flex-wrap:wrap}
+.opt{font-family:ui-monospace,monospace;font-size:12px;font-weight:700;padding:6px 0;width:42px;text-align:center;border-radius:7px;border:1.5px solid var(--line);background:#fff;cursor:pointer;transition:.12s;color:var(--muted)}
+.opt:hover{border-color:var(--muted)}
+.opt[data-v=Y].on{background:var(--y);color:#fff;border-color:var(--y)}
+.opt[data-v=P].on{background:var(--p);color:#fff;border-color:var(--p)}
+.opt[data-v=N].on{background:var(--n);color:#fff;border-color:var(--n)}
+.opt[data-v=NA].on{background:var(--na);color:#fff;border-color:var(--na)}
+
+.gap{margin-top:8px}
+.gap-flag{display:inline-block;font-size:11px;font-family:ui-monospace,monospace;color:var(--n);background:#fbeae8;border:1px solid #f0c9c4;padding:2px 8px;border-radius:6px}
+.cmt{width:100%;margin-top:8px;font-family:inherit;font-size:13px;padding:8px 10px;border:1px solid var(--line);border-radius:7px;background:#fffef9;resize:vertical;min-height:0;display:none}
+.cmt.show{display:block}
+
+.summary{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin:22px 0}
+.summary h2{font-size:18px;color:var(--green);margin-bottom:14px}
+.big-star{font-size:40px;color:var(--gold);letter-spacing:4px;text-align:center;margin:6px 0}
+.big-pct{text-align:center;font-size:46px;font-weight:700;font-family:ui-monospace,monospace;color:var(--green);line-height:1}
+.big-cap{text-align:center;font-size:13px;color:var(--muted);margin-top:4px}
+.sumtable{width:100%;border-collapse:collapse;margin-top:16px;font-size:13px}
+.sumtable th,.sumtable td{text-align:left;padding:7px 8px;border-bottom:1px solid #efeadd}
+.sumtable th{font-family:ui-monospace,monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.sumtable td.num{font-family:ui-monospace,monospace;text-align:right}
+.disclaimer{font-size:12px;color:var(--muted);font-style:italic;margin-top:16px;line-height:1.5;border-top:1px dashed var(--line);padding-top:12px}
+footer{text-align:center;font-size:11px;color:var(--muted);padding:24px 18px 8px;font-family:ui-monospace,monospace}
+@media(max-width:520px){h1{font-size:22px}.sc-meta{display:none}.opt{width:40px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="eyebrow">Laboratory Quality Self-Assessment</div>
+  <h1>SLIPTA Checklist · Version 3:2023</h1>
+  <div class="sub">Stepwise Laboratory Quality Improvement Process Towards Accreditation</div>
+  <div class="rule"></div>
+</div></header>
+
+<div class="scorebar"><div class="wrap">
+  <span class="stars" id="sbStars">☆☆☆☆☆</span>
+  <span class="sc-pct" id="sbPct">0.0%</span>
+  <span class="sc-meta">Score <b id="sbScore">0</b> / <b id="sbDenom">373</b><br><span id="sbStarLabel">No Stars</span></span>
+</div></div>
+
+<div class="wrap">
+  <div class="intro">
+    <p>Self-assessment tool for laboratories preparing for a SLIPTA audit, based on the WHO-AFRO / ASLM SLIPTA Checklist Version 3:2023 (aligned to ISO 15189:2022). Mark each requirement <b>Y</b> (Yes — all elements present), <b>P</b> (Partial — 1 pt), <b>N</b> (No — 0 pts) or <b>NA</b> (Not Applicable, with documented justification).</p>
+    <p>Star rating uses the official method: NA points are subtracted from the 373-point maximum and the percentage is computed against that adjusted denominator. Bands — No Stars &lt;55% · 1★ 55–64% · 2★ 65–74% · 3★ 75–84% · 4★ 85–94% · 5★ ≥95%.</p>
+    <p class="src">Saves automatically on this device. Not an official audit — for internal readiness only.</p>
+  </div>
+
+  <div class="controls">
+    <button class="btn primary" onclick="expandAll(true)">Expand all</button>
+    <button class="btn" onclick="expandAll(false)">Collapse all</button>
+    <button class="btn" onclick="toggleComments()">Toggle comments</button>
+    <button class="btn" onclick="exportData()">Export results</button>
+    <button class="btn warn" onclick="resetAll()">Reset</button>
+  </div>
+
+  <div id="sections"></div>
+
+  <div class="summary" id="summary">
+    <h2>Readiness Summary</h2>
+    <div class="big-star" id="bigStar">☆☆☆☆☆</div>
+    <div class="big-pct" id="bigPct">0.0%</div>
+    <div class="big-cap" id="bigCap">No Stars · 0 of 373 points · 0 of 151 items answered</div>
+    <table class="sumtable">
+      <thead><tr><th>Section</th><th style="text-align:right">Score</th><th style="text-align:right">Max</th><th style="text-align:right">%</th><th style="text-align:right">Gaps</th></tr></thead>
+      <tbody id="sumBody"></tbody>
+    </table>
+    <div class="disclaimer">This self-assessment is an internal preparedness aid and does not constitute or replace an official SLIPTA audit, which must be conducted by a trained and certified SLIPTA Auditor. Sections 1 and 5 carry a small reconciliation note where the source checklist's printed per-question point values do not sum to its stated section subtotal; the official subtotal is used as the maximum.</div>
+  </div>
+</div>
+
+<footer>SLIPTA V3:2023 Self-Assessment · Offline tool · English</footer>
+
+<script>
+/* SLIPTA Checklist V3:2023 dataset
+   Source: WHO-AFRO / ASLM SLIPTA Checklist Version 3:2023 (ISO 15189:2022)
+   Point values (2 or 3) and section totals transcribed from the official checklist.
+   English = authoritative (condensed question stems).
+   French (fr) = machine-assisted draft, MUST be verified against AFNOR ISO 15189:2022
+   terminology before relied upon. Flagged in-app as "à vérifier".
+
+   Star bands (NA-adjusted % of 373):
+     <55% = 0★ | 55-64% = 1★ | 65-74% = 2★ | 75-84% = 3★ | 85-94% = 4★ | >=95% = 5★
+*/
+const STAR_BANDS = [
+  { min: 0,  max: 54.999, stars: 0 },
+  { min: 55, max: 64.999, stars: 1 },
+  { min: 65, max: 74.999, stars: 2 },
+  { min: 75, max: 84.999, stars: 3 },
+  { min: 85, max: 94.999, stars: 4 },
+  { min: 95, max: 100,    stars: 5 }
+];
+
+const SECTIONS = [
+  { id:1, total:22, en:"Documents and Records", fr:"Documents et enregistrements", q:[
+    {n:"1.1", p:2, en:"Documentation stating the laboratory's legal identity.", fr:"Documentation attestant l'identité juridique du laboratoire."},
+    {n:"1.2", p:3, en:"Current quality manual (or equivalent) of management system policies and objectives, communicated and understood by all personnel.", fr:"Manuel qualité courant (ou équivalent) des politiques et objectifs du système de management, communiqué et compris par tout le personnel."},
+    {n:"1.3", p:2, en:"Document control system for all internal and external documents and information.", fr:"Système de maîtrise des documents pour toutes les sources internes et externes."},
+    {n:"1.4", p:2, en:"Records detailing all management-system documents with editions and distribution.", fr:"Enregistrements de tous les documents du système avec éditions et diffusion."},
+    {n:"1.5", p:2, en:"Documented and maintained objectives and policies fulfilling ISO 15189:2022, implemented at all levels.", fr:"Objectifs et politiques documentés et tenus à jour selon ISO 15189:2022, mis en œuvre à tous les niveaux."},
+    {n:"1.6", p:2, en:"Quality documents easily accessible, available, in a commonly understood language, communicated to relevant personnel.", fr:"Documents qualité accessibles, disponibles, dans une langue comprise et communiqués au personnel concerné."},
+    {n:"1.7", p:2, en:"Quality documents carry approval, review/revision history, version, location and discontinuation records.", fr:"Les documents qualité portent approbation, historique de révision, version, emplacement et retrait."},
+    {n:"1.8", p:2, en:"Invalid/discontinued documents identified, marked, removed; one copy retained.", fr:"Documents invalides/retirés identifiés, marqués, retirés; une copie conservée."},
+    {n:"1.9", p:2, en:"Results and technical/quality records archived for a specified period (per Section 9).", fr:"Résultats et enregistrements techniques/qualité archivés pour une période définie (voir Section 9)."},
+    {n:"1.10", p:2, en:"Archiving system allowing easy and timely retrieval of patient results (per Section 9).", fr:"Système d'archivage permettant une récupération facile et rapide des résultats patients (voir Section 9)."}
+  ]},
+  { id:2, total:26, en:"Organisation and Leadership", fr:"Organisation et leadership", q:[
+    {n:"2.1", p:3, en:"Procedure/process for organizational code of conduct (policies, impartiality, confidentiality, conflicts of interest).", fr:"Procédure/processus de code de conduite (politiques, impartialité, confidentialité, conflits d'intérêts)."},
+    {n:"2.2", p:2, en:"Implementation of the code of conduct with records.", fr:"Mise en œuvre du code de conduite avec enregistrements."},
+    {n:"2.3", p:2, en:"Deputization process ensuring continuity when key personnel are absent.", fr:"Processus de suppléance assurant la continuité en l'absence du personnel clé."},
+    {n:"2.4", p:2, en:"Budgetary projections based on personnel, scope, infrastructure, equipment, service, QA needs.", fr:"Projections budgétaires fondées sur le personnel, la portée, l'infrastructure, l'équipement, la maintenance et l'AQ."},
+    {n:"2.5", p:3, en:"Routine documented review of all quality and technical records.", fr:"Revue documentée régulière de tous les enregistrements qualité et techniques."},
+    {n:"2.6", p:3, en:"Procedure/process for management review (frequency, inputs, attendees, conduct, outputs, communication, follow-up).", fr:"Procédure/processus de revue de direction (fréquence, données d'entrée, participants, conduite, résultats, communication, suivi)."},
+    {n:"2.7", p:2, en:"Management reviews conducted at planned intervals.", fr:"Revues de direction menées à intervalles planifiés."},
+    {n:"2.8", p:3, en:"Management review includes all required inputs (Clause 8.9.2 a–j).", fr:"La revue de direction inclut toutes les données d'entrée requises (8.9.2 a–j)."},
+    {n:"2.9", p:2, en:"Management review includes all required outputs.", fr:"La revue de direction inclut tous les résultats requis."},
+    {n:"2.10", p:2, en:"Findings and actions from reviews communicated to relevant personnel.", fr:"Constats et actions des revues communiqués au personnel concerné."},
+    {n:"2.11", p:2, en:"Review action items completed within timeframes and monitored for effectiveness.", fr:"Actions de revue achevées dans les délais et suivies quant à leur efficacité."}
+  ]},
+  { id:3, total:34, en:"Personnel Management", fr:"Gestion du personnel", q:[
+    {n:"3.1", p:3, en:"Procedure/process for personnel management (org structure, job profiles, recruitment, orientation, records).", fr:"Procédure/processus de gestion du personnel (structure, profils de poste, recrutement, orientation, dossiers)."},
+    {n:"3.2", p:2, en:"Duty roster covering normal and after hours.", fr:"Tableau de service couvrant les heures normales et de garde."},
+    {n:"3.3", p:2, en:"Organizational chart showing relationship to parent organization.", fr:"Organigramme indiquant la relation avec l'organisation mère."},
+    {n:"3.4", p:3, en:"Laboratory directed by qualified person(s) with authority/competency for defined responsibilities.", fr:"Laboratoire dirigé par une ou des personnes qualifiées disposant de l'autorité et de la compétence requises."},
+    {n:"3.5", p:2, en:"Designated person(s) with authority/resources for the management system and deviation identification.", fr:"Personne(s) désignée(s) avec autorité/ressources pour le système et l'identification des écarts."},
+    {n:"3.6", p:3, en:"Procedure/process for authorization (activities requiring it, criteria, documentation, deputies).", fr:"Procédure/processus d'autorisation (activités, critères, documentation, suppléants)."},
+    {n:"3.7", p:2, en:"Personnel authorized for specific activities (methods, result release, LIS access).", fr:"Personnel autorisé pour des activités spécifiques (méthodes, libération des résultats, accès SIL)."},
+    {n:"3.8", p:3, en:"Procedure/process for personnel training (needs, programme, CE, recording, effectiveness).", fr:"Procédure/processus de formation (besoins, programme, FC, enregistrement, efficacité)."},
+    {n:"3.9", p:2, en:"Programme for training, continuing education and professional development.", fr:"Programme de formation, éducation continue et développement professionnel."},
+    {n:"3.10", p:3, en:"Procedure/process for competency assessment (methods, criteria, frequency, feedback, retraining, records).", fr:"Procédure/processus d'évaluation de la compétence (méthodes, critères, fréquence, retour, recyclage, dossiers)."},
+    {n:"3.11", p:2, en:"Competency assessed per defined criteria for new and existing personnel; retraining where needed.", fr:"Compétence évaluée selon des critères définis pour le personnel nouveau et en poste; recyclage si nécessaire."},
+    {n:"3.12", p:2, en:"Procedure/process for review of personnel performance.", fr:"Procédure/processus de revue de la performance du personnel."},
+    {n:"3.13", p:2, en:"Regular personnel meetings addressing defined items with records.", fr:"Réunions régulières du personnel traitant des points définis avec enregistrements."},
+    {n:"3.14", p:3, en:"Personnel records maintained including all required elements.", fr:"Dossiers du personnel tenus à jour incluant tous les éléments requis."}
+  ]},
+  { id:4, total:24, en:"Customer Focus", fr:"Orientation client", q:[
+    {n:"4.1", p:3, en:"Procedure/process for advisory services.", fr:"Procédure/processus de services consultatifs."},
+    {n:"4.2", p:2, en:"Qualified personnel provide advice/training on samples, examination choice, frequency, interpretation.", fr:"Personnel qualifié fournit conseils/formation sur échantillons, choix d'examens, fréquence, interprétation."},
+    {n:"4.3", p:3, en:"Procedure/process for handling complaints and feedback.", fr:"Procédure/processus de gestion des réclamations et retours."},
+    {n:"4.4", p:2, en:"Process for receipt and resolution of complaints, with records and feedback.", fr:"Processus de réception et résolution des réclamations, avec enregistrements et retour."},
+    {n:"4.5", p:2, en:"Process for treating patients' well-being, samples or remains with care and respect.", fr:"Processus de traitement du bien-être des patients, des échantillons ou dépouilles avec soin et respect."},
+    {n:"4.6", p:3, en:"Procedure/process for service agreements (including POCT).", fr:"Procédure/processus d'accords de service (y compris EDL/POCT)."},
+    {n:"4.7", p:3, en:"Implementation of service-agreement procedure with records.", fr:"Mise en œuvre de la procédure d'accords de service avec enregistrements."},
+    {n:"4.8", p:2, en:"Laboratory information available to patients/users in an understood language.", fr:"Informations du laboratoire disponibles aux patients/utilisateurs dans une langue comprise."},
+    {n:"4.9", p:2, en:"Timely documented notification of delays/interruptions and resumption.", fr:"Notification documentée et rapide des retards/interruptions et de la reprise."},
+    {n:"4.10", p:2, en:"Opportunities for patients, users and personnel to give improvement feedback, with records.", fr:"Possibilités pour patients, utilisateurs et personnel de donner un retour d'amélioration, avec enregistrements."}
+  ]},
+  { id:5, total:44, en:"Equipment Management", fr:"Gestion des équipements", q:[
+    {n:"5.1", p:3, en:"Procedure/process for management of laboratory equipment (full lifecycle).", fr:"Procédure/processus de gestion des équipements (cycle de vie complet)."},
+    {n:"5.2", p:2, en:"Access to required equipment for laboratory activities.", fr:"Accès aux équipements nécessaires aux activités du laboratoire."},
+    {n:"5.3", p:2, en:"Equipment installed/placed per operator manuals and uniquely labelled.", fr:"Équipements installés/placés selon les manuels et étiquetés de façon unique."},
+    {n:"5.4", p:2, en:"Equipment operated by trained, competent, authorized personnel with records.", fr:"Équipements utilisés par du personnel formé, compétent et autorisé, avec enregistrements."},
+    {n:"5.5", p:2, en:"Procedure/process for validation and verification of equipment.", fr:"Procédure/processus de validation et vérification des équipements."},
+    {n:"5.6", p:3, en:"Equipment verified on installation, after maintenance/repair, before use.", fr:"Équipements vérifiés à l'installation, après maintenance/réparation, avant usage."},
+    {n:"5.7", p:3, en:"Current equipment inventory data available for all equipment.", fr:"Données d'inventaire à jour disponibles pour tous les équipements."},
+    {n:"5.8", p:2, en:"Defective equipment awaiting repair not used and clearly labelled.", fr:"Équipement défectueux en attente de réparation non utilisé et clairement étiqueté."},
+    {n:"5.9", p:2, en:"Obsolete equipment labelled and removed from workflow.", fr:"Équipement obsolète étiqueté et retiré du flux de travail."},
+    {n:"5.10", p:3, en:"Procedure/process for calibration of equipment.", fr:"Procédure/processus d'étalonnage des équipements."},
+    {n:"5.11", p:3, en:"Calibration and metrological traceability of measuring equipment.", fr:"Étalonnage et traçabilité métrologique des équipements de mesure."},
+    {n:"5.12", p:2, en:"Routine user preventive maintenance performed and recorded.", fr:"Maintenance préventive de routine effectuée et enregistrée."},
+    {n:"5.13", p:2, en:"Equipment serviced per schedule by approved providers, documented.", fr:"Équipements entretenus selon le calendrier par des prestataires agréés, documenté."},
+    {n:"5.14", p:2, en:"Equipment adverse incident reporting with investigation/corrective action.", fr:"Signalement des incidents liés aux équipements avec enquête/action corrective."},
+    {n:"5.15", p:2, en:"Manufacturer operator manuals available in an understood language.", fr:"Manuels d'utilisation du fabricant disponibles dans une langue comprise."},
+    {n:"5.16", p:2, en:"Precautions (e.g., password protection) against unintended equipment adjustment.", fr:"Précautions (ex. mot de passe) contre les réglages non intentionnels des équipements."}
+  ]},
+  { id:6, total:24, en:"Assessment", fr:"Évaluations", q:[
+    {n:"6.1", p:3, en:"Procedure/process for internal audits.", fr:"Procédure/processus d'audits internes."},
+    {n:"6.2", p:3, en:"Internal audits conducted per programme, covering all management-system areas.", fr:"Audits internes menés selon le programme, couvrant tous les domaines du système."},
+    {n:"6.3", p:3, en:"Audit recommendations, action plan and documented follow-up.", fr:"Recommandations d'audit, plan d'action et suivi documenté."},
+    {n:"6.4", p:3, en:"Procedure/process for risk management.", fr:"Procédure/processus de gestion des risques."},
+    {n:"6.5", p:3, en:"Risk management programme covering all listed process areas.", fr:"Programme de gestion des risques couvrant tous les domaines listés."},
+    {n:"6.6", p:2, en:"Use of evaluation tools to identify risks and opportunities.", fr:"Utilisation d'outils d'évaluation pour identifier risques et opportunités."},
+    {n:"6.7", p:3, en:"Risk and opportunities action plan, evaluated and modified for effectiveness.", fr:"Plan d'action risques et opportunités, évalué et modifié selon l'efficacité."},
+    {n:"6.8", p:2, en:"Quality indicators defined, measured and monitored across all phases.", fr:"Indicateurs qualité définis, mesurés et suivis sur toutes les phases."},
+    {n:"6.9", p:2, en:"Quality indicator review outcomes used to improve processes.", fr:"Résultats de la revue des indicateurs utilisés pour améliorer les processus."}
+  ]},
+  { id:7, total:27, en:"Supplier and Inventory Management", fr:"Gestion des fournisseurs et des stocks", q:[
+    {n:"7.1", p:3, en:"Procedure/process for externally provided products and services.", fr:"Procédure/processus pour les produits et services fournis par l'extérieur."},
+    {n:"7.2", p:3, en:"Procedure/process for purchasing and inventory control.", fr:"Procédure/processus d'achat et de contrôle des stocks."},
+    {n:"7.3", p:2, en:"Process for forecasting needs for services, supplies and reagents.", fr:"Processus de prévision des besoins en services, fournitures et réactifs."},
+    {n:"7.4", p:2, en:"Purchasing specifications provided for services, supplies, consumables.", fr:"Spécifications d'achat fournies pour services, fournitures, consommables."},
+    {n:"7.5", p:2, en:"Service supplier performance monitored against approved criteria.", fr:"Performance des fournisseurs de services suivie selon les critères approuvés."},
+    {n:"7.6", p:3, en:"Inventory records for each reagent and consumable with all required fields.", fr:"Enregistrements de stock pour chaque réactif et consommable avec tous les champs requis."},
+    {n:"7.7", p:2, en:"Management review and approval of external product/service requirements.", fr:"Revue et approbation par la direction des besoins en produits/services externes."},
+    {n:"7.8", p:2, en:"Inventory system with min/max stock levels and consumption monitoring.", fr:"Système de stock avec niveaux min/max et suivi de la consommation."},
+    {n:"7.9", p:2, en:"Storage areas set up and monitored appropriately.", fr:"Zones de stockage aménagées et surveillées de façon appropriée."},
+    {n:"7.10", p:2, en:"First-Expiration-First-Out (FEFO) practiced.", fr:"Principe Premier Périmé Premier Sorti (FEFO) appliqué."},
+    {n:"7.11", p:2, en:"Reagents/test kits in use and in stock within expiry/stability.", fr:"Réactifs/trousses en usage et en stock dans les limites de péremption/stabilité."},
+    {n:"7.12", p:2, en:"Expired products labelled and disposed of properly with records.", fr:"Produits périmés étiquetés et éliminés correctement avec enregistrements."}
+  ]},
+  { id:8, total:71, en:"Process Management", fr:"Gestion des processus", q:[
+    {n:"8.1", p:3, en:"Procedure/process for continuity and emergency preparedness (contingency plan).", fr:"Procédure/processus de continuité et préparation aux urgences (plan de contingence)."},
+    {n:"8.2", p:3, en:"Implementation of continuity and emergency preparedness plan, tested and communicated.", fr:"Mise en œuvre du plan de continuité et préparation, testé et communiqué."},
+    {n:"8.3", p:3, en:"Procedure/process for pre-examination processes.", fr:"Procédure/processus pour les processus pré-analytiques."},
+    {n:"8.4", p:3, en:"Records implementing instructions for collection activities.", fr:"Enregistrements de mise en œuvre des instructions de prélèvement."},
+    {n:"8.5", p:3, en:"Test request captures all required information.", fr:"La demande d'examen recueille toutes les informations requises."},
+    {n:"8.6", p:3, en:"Primary sample receipt procedure implemented with records.", fr:"Procédure de réception des échantillons primaires mise en œuvre avec enregistrements."},
+    {n:"8.7", p:2, en:"Pre-examination handling, processing and storage per stability/testing requirements.", fr:"Manipulation, traitement et stockage pré-analytiques selon stabilité/exigences."},
+    {n:"8.8", p:2, en:"Sample transportation safe and compliant (incl. IATA where applicable).", fr:"Transport des échantillons sûr et conforme (IATA le cas échéant)."},
+    {n:"8.9", p:3, en:"Procedure/process for referral laboratories and technical consultants.", fr:"Procédure/processus pour laboratoires de référence et consultants techniques."},
+    {n:"8.10", p:2, en:"Referral laboratories/consultants selected, evaluated, tracked, registered.", fr:"Laboratoires/consultants de référence sélectionnés, évalués, suivis, enregistrés."},
+    {n:"8.11", p:2, en:"Procedure/process for documentation of examination procedures.", fr:"Procédure/processus de documentation des procédures d'examen."},
+    {n:"8.12", p:2, en:"Examination information and instructions available in appropriate locations.", fr:"Informations et instructions d'examen disponibles aux endroits appropriés."},
+    {n:"8.13", p:2, en:"Reagents/consumables acceptance testing before use, documented.", fr:"Tests d'acceptation des réactifs/consommables avant usage, documentés."},
+    {n:"8.14", p:3, en:"Procedure/process for internal quality control (IQC).", fr:"Procédure/processus de contrôle interne de qualité (CIQ)."},
+    {n:"8.15", p:3, en:"IQC performed and verified within limits before result release; corrective action on failure.", fr:"CIQ effectué et vérifié dans les limites avant libération; action corrective en cas d'échec."},
+    {n:"8.16", p:3, en:"QC performance monitored/reviewed; action on errors or rule violations.", fr:"Performance du CQ suivie/revue; action en cas d'erreurs ou violations de règles."},
+    {n:"8.17", p:2, en:"Comparability of results across methods/equipment including POCT.", fr:"Comparabilité des résultats entre méthodes/équipements y compris EDL/POCT."},
+    {n:"8.18", p:2, en:"Environmental conditions monitored and recorded daily.", fr:"Conditions environnementales surveillées et enregistrées quotidiennement."},
+    {n:"8.19", p:2, en:"Acceptable ranges defined; action documented for unacceptable conditions.", fr:"Plages acceptables définies; action documentée pour conditions inacceptables."},
+    {n:"8.20", p:3, en:"Procedure/process for external quality assessment (EQA).", fr:"Procédure/processus d'évaluation externe de la qualité (EEQ)."},
+    {n:"8.21", p:3, en:"Participation in EQA or alternative assessment for all tests.", fr:"Participation à l'EEQ ou évaluation alternative pour tous les tests."},
+    {n:"8.22", p:3, en:"Procedure/process for verification and validation of examination methods.", fr:"Procédure/processus de vérification et validation des méthodes d'examen."},
+    {n:"8.23", p:3, en:"Records of verification of examination methods.", fr:"Enregistrements de vérification des méthodes d'examen."},
+    {n:"8.24", p:3, en:"Records of validation of examination methods.", fr:"Enregistrements de validation des méthodes d'examen."},
+    {n:"8.25", p:2, en:"Procedure/process for measurement uncertainty (MU).", fr:"Procédure/processus pour l'incertitude de mesure (IM)."},
+    {n:"8.26", p:3, en:"Documented MU estimates for each quantitative/semi-quantitative test.", fr:"Estimations documentées de l'IM pour chaque test quantitatif/semi-quantitatif."},
+    {n:"8.27", p:3, en:"Procedure/process for biological reference intervals or clinical decision limits.", fr:"Procédure/processus pour intervalles de référence biologiques ou limites de décision clinique."}
+  ]},
+  { id:9, total:24, en:"Information Management", fr:"Gestion de l'information", q:[
+    {n:"9.1", p:3, en:"Procedure/process for reporting and release of results.", fr:"Procédure/processus de compte rendu et libération des résultats."},
+    {n:"9.2", p:2, en:"Test results legible, technically verified, confirmed against patient identity.", fr:"Résultats lisibles, vérifiés techniquement, confirmés contre l'identité du patient."},
+    {n:"9.3", p:2, en:"Person authorizing result release identified on report/records.", fr:"Personne autorisant la libération identifiée sur le rapport/enregistrements."},
+    {n:"9.4", p:3, en:"Laboratory report contains all required elements.", fr:"Le rapport du laboratoire contient tous les éléments requis."},
+    {n:"9.5", p:2, en:"Results traceable to equipment when multiple instruments used for same test.", fr:"Résultats traçables à l'équipement quand plusieurs instruments servent au même test."},
+    {n:"9.6", p:3, en:"Procedure/process for laboratory information system (LIS).", fr:"Procédure/processus pour le système d'information du laboratoire (SIL)."},
+    {n:"9.7", p:2, en:"Archived results labelled and stored securely, access-controlled.", fr:"Résultats archivés étiquetés et stockés en sécurité, accès contrôlé."},
+    {n:"9.8", p:2, en:"Authorities/responsibilities for information management defined and implemented.", fr:"Autorités/responsabilités de gestion de l'information définies et mises en œuvre."},
+    {n:"9.9", p:2, en:"Verification of electronic LIS before implementation and after upgrades.", fr:"Vérification du SIL électronique avant mise en œuvre et après mises à niveau."},
+    {n:"9.10", p:3, en:"Records of maintenance of the LIS.", fr:"Enregistrements de maintenance du SIL."}
+  ]},
+  { id:10, total:13, en:"Nonconforming Events", fr:"Gestion des événements non conformes", q:[
+    {n:"10.1", p:3, en:"Procedure/process for handling nonconforming work, nonconformities and corrective action.", fr:"Procédure/processus de gestion du travail non conforme, des non-conformités et actions correctives."},
+    {n:"10.2", p:3, en:"Identification and management of nonconforming work/nonconformities with RCA and risk assessment.", fr:"Identification et gestion du travail non conforme/non-conformités avec ACR et évaluation du risque."},
+    {n:"10.3", p:2, en:"Records of communication to requester where NC influences patient management.", fr:"Enregistrements de communication au demandeur quand la NC influence la prise en charge."},
+    {n:"10.4", p:2, en:"Authorization for resumption of testing documented (where halted).", fr:"Autorisation de reprise des tests documentée (lorsque suspendus)."},
+    {n:"10.5", p:3, en:"Corrective action performed and documented for nonconforming work/nonconformities.", fr:"Action corrective effectuée et documentée pour travail non conforme/non-conformités."}
+  ]},
+  { id:11, total:7, en:"Continual Improvement", fr:"Amélioration continue", q:[
+    {n:"11.1", p:3, en:"Procedure/process for continual improvement.", fr:"Procédure/processus d'amélioration continue."},
+    {n:"11.2", p:2, en:"Laboratory identifies and undertakes continual quality improvement activities.", fr:"Le laboratoire identifie et mène des activités d'amélioration continue."},
+    {n:"11.3", p:2, en:"Outcomes of continual improvement communicated to management, personnel, users.", fr:"Résultats de l'amélioration continue communiqués à la direction, au personnel, aux utilisateurs."}
+  ]},
+  { id:12, total:57, en:"Facilities and Safety", fr:"Installations et sécurité", q:[
+    {n:"12.1", p:3, en:"Procedure/process for laboratory safety.", fr:"Procédure/processus de sécurité du laboratoire."},
+    {n:"12.2", p:3, en:"Procedure/process for facilities and environmental conditions (incl. POCT).", fr:"Procédure/processus pour installations et conditions environnementales (y compris EDL/POCT)."},
+    {n:"12.3", p:2, en:"Documented evaluation of adequacy of laboratory size and layout.", fr:"Évaluation documentée de l'adéquation de la taille et de l'agencement du laboratoire."},
+    {n:"12.4", p:2, en:"Patient care and testing areas distinctly separate.", fr:"Zones de soins et de test distinctement séparées."},
+    {n:"12.5", p:2, en:"Housekeeping activities performed with records.", fr:"Activités d'entretien réalisées avec enregistrements."},
+    {n:"12.6", p:3, en:"Physical work environment appropriate for testing.", fr:"Environnement de travail physique approprié aux tests."},
+    {n:"12.7", p:2, en:"Laboratory secured from unauthorized access with systems and signage.", fr:"Laboratoire sécurisé contre l'accès non autorisé avec systèmes et signalisation."},
+    {n:"12.8", p:3, en:"Adequate, labelled storage space under appropriate conditions.", fr:"Espace de stockage adéquat, étiqueté, dans des conditions appropriées."},
+    {n:"12.9", p:2, en:"Laboratory facilities maintained functional with safety devices verified.", fr:"Installations maintenues fonctionnelles avec dispositifs de sécurité vérifiés."},
+    {n:"12.10", p:3, en:"Biosafety cabinet conditions met where present and required.", fr:"Conditions des postes de sécurité microbiologique satisfaites le cas échéant."},
+    {n:"12.11", p:3, en:"Safety program including all listed elements.", fr:"Programme de sécurité incluant tous les éléments listés."},
+    {n:"12.12", p:3, en:"Laboratory safety manual available, accessible, up to date.", fr:"Manuel de sécurité disponible, accessible, à jour."},
+    {n:"12.13", p:2, en:"Waste disposal adequate; infectious/non-infectious separated; sharps managed.", fr:"Élimination des déchets adéquate; déchets infectieux/non infectieux séparés; objets tranchants gérés."},
+    {n:"12.14", p:3, en:"Hazardous chemicals properly handled, classified, labelled, stored, disposed.", fr:"Produits chimiques dangereux correctement manipulés, classés, étiquetés, stockés, éliminés."},
+    {n:"12.15", p:2, en:"Fire safety: cords, extinguishers, detection/alarm, training and drills.", fr:"Sécurité incendie: cordons, extincteurs, détection/alarme, formation et exercices."},
+    {n:"12.16", p:2, en:"Safety inspections/audits conducted regularly and documented.", fr:"Inspections/audits de sécurité menés régulièrement et documentés."},
+    {n:"12.17", p:3, en:"Standard safety equipment available and properly used.", fr:"Équipement de sécurité standard disponible et correctement utilisé."},
+    {n:"12.18", p:2, en:"PPE accessible at workstation and used appropriately and consistently.", fr:"EPI accessibles au poste et utilisés de façon appropriée et constante."},
+    {n:"12.19", p:2, en:"Post-exposure prophylaxis policies available and implemented.", fr:"Politiques de prophylaxie post-exposition disponibles et mises en œuvre."},
+    {n:"12.20", p:2, en:"Adverse incidents/injuries investigated, documented, recurrence reduced.", fr:"Incidents/blessures investigués, documentés, récurrence réduite."},
+    {n:"12.21", p:2, en:"Adverse incidents or injuries documented and investigated.", fr:"Incidents indésirables ou blessures documentés et investigués."},
+    {n:"12.22", p:2, en:"All relevant personnel trained in safety practices for their tasks.", fr:"Tout le personnel concerné formé aux pratiques de sécurité de ses tâches."},
+    {n:"12.23", p:2, en:"Trained safety officer designated to implement/monitor the safety program.", fr:"Responsable sécurité formé désigné pour mettre en œuvre/suivre le programme."},
+    {n:"12.24", p:2, en:"Biosecurity policies, processes and procedures implemented where appropriate.", fr:"Politiques, processus et procédures de biosûreté mises en œuvre le cas échéant."}
+  ]}
+];
+
+
+const STORE='slipta_v3_en';
+let answers={}, comments={}, showCmt=false;
+try{const s=JSON.parse(localStorage.getItem(STORE)||'{}');answers=s.answers||{};comments=s.comments||{};}catch(e){}
+
+function save(){try{localStorage.setItem(STORE,JSON.stringify({answers,comments}));}catch(e){}}
+function starFor(pct){for(const b of STAR_BANDS){if(pct>=b.min&&pct<=b.max)return b.stars;}return 0;}
+function starStr(n){return '★'.repeat(n)+'☆'.repeat(5-n);}
+const STAR_LABELS=['No Stars','1 Star','2 Stars','3 Stars','4 Stars','5 Stars'];
+
+function totalItems(){return SECTIONS.reduce((a,s)=>a+s.q.length,0);}
+
+function calc(){
+  let naPts=0, earnedRaw=0, answered=0;
+  const perSec={};
+  for(const s of SECTIONS){
+    let secEarnedRaw=0, secNa=0, secGaps=0;
+    for(const q of s.q){
+      const key=q.n, v=answers[key];
+      if(v){answered++;}
+      if(v==='NA'){secNa+=q.p; naPts+=q.p;}
+      else if(v==='Y'){secEarnedRaw+=q.p; earnedRaw+=q.p;}
+      else if(v==='P'){secEarnedRaw+=1; earnedRaw+=1; secGaps++;}
+      else if(v==='N'){secGaps++;}
+    }
+    // Option B: section max anchored to official subtotal, minus NA (scaled to official)
+    const secMaxAdj=Math.max(0,s.total-secNa);
+    // earned capped at adjusted max (handles Sec1/5 reconciliation gap gracefully)
+    const secEarned=Math.min(secEarnedRaw,secMaxAdj);
+    perSec[s.id]={earned:secEarned,max:secMaxAdj,gaps:secGaps,na:secNa};
+  }
+  const denom=Math.max(1,373-naPts);
+  const earned=Math.min(earnedRaw,denom);
+  const pct=earned/denom*100;
+  return {earned,denom,pct,stars:starFor(pct),answered,perSec};
+}
+
+function render(){
+  const root=document.getElementById('sections');
+  root.innerHTML='';
+  for(const s of SECTIONS){
+    const sec=document.createElement('div');
+    sec.className='section'; sec.dataset.sid=s.id;
+    const note=(s.id===1||s.id===5)?'<div class="sec-note">Note: the source checklist\'s printed per-question points do not fully sum to the stated section subtotal of '+s.total+'; the official subtotal is used as this section\'s maximum.</div>':'';
+    let qhtml='';
+    for(const q of s.q){
+      const v=answers[q.n]||'';
+      const gap=(v==='N'||v==='P');
+      qhtml+='<div class="q"><div class="q-num">'+q.n+'</div><div class="q-main">'+
+        '<div class="q-text">'+q.en+'</div>'+
+        '<div class="q-pts">Max '+q.p+' pts</div>'+
+        '<div class="opts">'+
+        ['Y','P','N','NA'].map(o=>'<div class="opt'+(v===o?' on':'')+'" data-v="'+o+'" data-q="'+q.n+'">'+o+'</div>').join('')+
+        '</div>'+
+        (gap?'<div class="gap"><span class="gap-flag">⚑ Gap — action needed</span></div>':'')+
+        '<textarea class="cmt'+(showCmt?' show':'')+'" data-q="'+q.n+'" placeholder="Auditor comment / evidence reference">'+(comments[q.n]||'')+'</textarea>'+
+        '</div></div>';
+    }
+    sec.innerHTML='<div class="sec-head"><div class="sec-num">'+s.id+'</div>'+
+      '<div style="flex:1"><div class="sec-title">'+s.en+'</div><div class="sec-bar"><i data-bar="'+s.id+'"></i></div></div>'+
+      '<div class="sec-score" data-score="'+s.id+'"></div><div class="chev">▶</div></div>'+
+      '<div class="sec-body">'+note+qhtml+'</div>';
+    root.appendChild(sec);
+  }
+  bind();
+  update();
+}
+
+function bind(){
+  document.querySelectorAll('.sec-head').forEach(h=>h.addEventListener('click',e=>{
+    if(e.target.closest('.opt')||e.target.closest('.cmt'))return;
+    h.parentElement.classList.toggle('open');
+  }));
+  document.querySelectorAll('.opt').forEach(o=>o.addEventListener('click',e=>{
+    e.stopPropagation();
+    const q=o.dataset.q, v=o.dataset.v;
+    answers[q]=(answers[q]===v)?undefined:v;
+    if(!answers[q])delete answers[q];
+    save(); render();
+  }));
+  document.querySelectorAll('.cmt').forEach(c=>c.addEventListener('input',e=>{
+    comments[c.dataset.q]=c.value; save();
+  }));
+}
+
+function update(){
+  const r=calc();
+  document.getElementById('sbStars').textContent=starStr(r.stars);
+  document.getElementById('sbPct').textContent=r.pct.toFixed(1)+'%';
+  document.getElementById('sbScore').textContent=r.earned;
+  document.getElementById('sbDenom').textContent=r.denom;
+  document.getElementById('sbStarLabel').textContent=STAR_LABELS[r.stars];
+  document.getElementById('bigStar').textContent=starStr(r.stars);
+  document.getElementById('bigPct').textContent=r.pct.toFixed(1)+'%';
+  document.getElementById('bigCap').textContent=STAR_LABELS[r.stars]+' · '+r.earned+' of '+r.denom+' adjusted points · '+r.answered+' of '+totalItems()+' items answered';
+  const body=document.getElementById('sumBody'); body.innerHTML='';
+  for(const s of SECTIONS){
+    const ps=r.perSec[s.id];
+    const p=ps.max>0?(ps.earned/ps.max*100):0;
+    body.innerHTML+='<tr><td>'+s.id+'. '+s.en+'</td><td class="num">'+ps.earned+'</td><td class="num">'+ps.max+'</td><td class="num">'+p.toFixed(0)+'%</td><td class="num">'+(ps.gaps||'—')+'</td></tr>';
+    const sc=document.querySelector('[data-score="'+s.id+'"]');
+    if(sc)sc.innerHTML='<b>'+ps.earned+'</b>/'+ps.max;
+    const bar=document.querySelector('[data-bar="'+s.id+'"]');
+    if(bar)bar.style.width=p+'%';
+  }
+}
+
+function expandAll(o){document.querySelectorAll('.section').forEach(s=>s.classList.toggle('open',o));}
+function toggleComments(){showCmt=!showCmt;document.querySelectorAll('.cmt').forEach(c=>c.classList.toggle('show',showCmt));}
+function resetAll(){if(confirm('Clear all answers and comments on this device?')){answers={};comments={};save();render();}}
+function exportData(){
+  const r=calc();
+  let txt='SLIPTA V3:2023 SELF-ASSESSMENT RESULTS\n';
+  txt+='Generated: '+new Date().toLocaleString()+'\n';
+  txt+='Overall: '+r.pct.toFixed(1)+'% ('+r.earned+'/'+r.denom+' adjusted) — '+STAR_LABELS[r.stars]+'\n';
+  txt+='='.repeat(50)+'\n\n';
+  for(const s of SECTIONS){
+    const ps=r.perSec[s.id];
+    txt+='SECTION '+s.id+': '+s.en.toUpperCase()+' — '+ps.earned+'/'+ps.max+' ('+(ps.max>0?(ps.earned/ps.max*100).toFixed(0):0)+'%) — '+ps.gaps+' gap(s)\n';
+    for(const q of s.q){
+      const v=answers[q.n]||'-';
+      txt+='  '+q.n+' ['+v+'] '+q.en+'\n';
+      if(comments[q.n])txt+='       » '+comments[q.n]+'\n';
+    }
+    txt+='\n';
+  }
+  const blob=new Blob([txt],{type:'text/plain'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='SLIPTA_self_assessment_'+new Date().toISOString().slice(0,10)+'.txt';
+  a.click();
+}
+
+render();
+if(SECTIONS.length)document.querySelector('.section').classList.add('open');
+</script>
+</body>
+</html>
