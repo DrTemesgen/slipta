@@ -1,0 +1,18 @@
+{
+  "name": "SLIPTA Self-Assessment",
+  "short_name": "SLIPTA",
+  "description": "Offline SLIPTA V3:2023 laboratory quality self-assessment with star scoring.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b3d2e",
+  "theme_color": "#0b3d2e",
+  "lang": "en",
+  "categories": ["medical", "productivity", "education"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
